@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.7.34003.232
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Almacen Heater", "Almacen Heater.csproj", "{1D4BB8A1-6B77-453F-9B34-D676F187EF3A}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{1D4BB8A1-6B77-453F-9B34-D676F187EF3A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1D4BB8A1-6B77-453F-9B34-D676F187EF3A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1D4BB8A1-6B77-453F-9B34-D676F187EF3A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1D4BB8A1-6B77-453F-9B34-D676F187EF3A}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {DF833C53-0957-412C-A312-268CFE784B5B}
+	EndGlobalSection
+EndGlobal
