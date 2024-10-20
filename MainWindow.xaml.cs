@@ -28,6 +28,9 @@ namespace Almacen_Heater
         public MainWindow()
         {
             InitializeComponent();
+
+            CargarTabUsuarios();
+
             registroactual = DB.Registro(DB.UltimoRegistro());
             TBFechaRegistro.Text = registroactual.Rows[0]["fecha"].ToString();
             TBIdRegistro.Text = registroactual.Rows[0]["id"].ToString();
@@ -108,6 +111,7 @@ namespace Almacen_Heater
         {
             DGMovimientos.Items.Refresh();
         }
+
     }
 
     

@@ -144,5 +144,65 @@ namespace Almacen_Heater
         }
 
 
+        public List<Usuario> CargarUsuarios()
+        {
+            List<Usuario> usuarios = new List<Usuario>();
+
+            lock (lockObject)
+            {
+                try
+                {
+                    con.Open();
+                    using (cmd = new MySqlCommand("CargarUsuarios", con))
+                    {
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        using (MySqlDataReader reader = cmd.ExecuteReader())
+                        {
+                            while (reader.Read())
+                            {
+                                usuarios.Add(
+                                    new Usuario()
+                                    {
+                                        id = reader.GetInt32("id"),
+                                        Nombre = reader.GetString("Nombre"),
+                                        Nivel = reader.GetInt32("Nivel")
+                                    });
+                            }
+                        }
+                    }
+                }
+                catch (Exception)
+                {
+                    throw;
+                }
+                con.Close();
+            }
+            return usuarios;
+        }
+
+        public void InsertarUsuario(Usuario usuario)
+        {
+            lock (lockObject)
+            {
+                try
+                {
+                    con.Open();
+                    using (cmd = new MySqlCommand("InsertarUsuario",con))
+                    {
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        cmd.Parameters.AddWithValue("@id", usuario.id);
+                        cmd.Parameters.AddWithValue("@Nombre", usuario.Nombre);
+                        cmd.Parameters.AddWithValue("@Nivel", usuario.Nivel);
+                        cmd.ExecuteNonQuery();
+                    }
+                }
+                catch (Exception)
+                {
+
+                    throw;
+                }
+                con.Close();
+            }
+        }
     }
 }

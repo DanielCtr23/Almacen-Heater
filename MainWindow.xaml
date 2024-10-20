@@ -93,7 +93,7 @@
                         <Button x:Name="BtnAnterior" Content="ANTERIOR" FontSize="20" Foreground="White" Background="#333" Margin="10" Grid.Column="4" Grid.Row="1" Click="BtnAnterior_Click" />
                         <Button x:Name="BtnSiguiente" Content="SIGUIENTE" FontSize="20" Foreground="White" Background="#333" Margin="10" Grid.Column="5" Grid.Row="1" />
 
-                        <DataGrid x:Name="DGMovimientos" Foreground="White" Grid.ColumnSpan="7" Grid.Column="1" Grid.Row="3" Background="#333" 
+                        <DataGrid x:Name="DGMovimientos" Grid.ColumnSpan="7" Grid.Column="1" Grid.Row="3" Foreground="White" Background="#333" 
                                   FontSize="16" MouseDoubleClick="DGMovimientos_MouseDoubleClick" SelectedCellsChanged="DGMovimientos_SelectedCellsChanged"
                                   AutoGenerateColumns="False" CellEditEnding="DGMovimientos_CellEditEnding" RowEditEnding="DGMovimientos_RowEditEnding" AddingNewItem="DGMovimientos_AddingNewItem">
                             <DataGrid.Resources>
@@ -135,6 +135,36 @@
                         <TextBlock Text="INVENTARIO" Foreground="White"/>
                     </StackPanel>
                 </TabItem.Header>
+                <ScrollViewer>
+                    <Grid Height="1200">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition/>
+                            <RowDefinition Height=".5*"/>
+                        </Grid.RowDefinitions>
+                        <Grid Grid.ColumnSpan="3" Margin="20,20,15,20" Background="#222">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition/>
+                                <ColumnDefinition/>
+                                <ColumnDefinition/>
+                                <ColumnDefinition/>
+                                <ColumnDefinition/>
+                                <ColumnDefinition/>
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition/>
+                                <RowDefinition/>
+                                <RowDefinition/>
+                                <RowDefinition Height="6*"/>
+                            </Grid.RowDefinitions>
+                        </Grid>
+                    </Grid>
+                </ScrollViewer>
             </TabItem>
             <TabItem MinWidth="140" MinHeight="65" HorizontalAlignment="Stretch" Margin="0,-2,0,0">
                 <TabItem.Header>
@@ -142,6 +172,57 @@
                         <TextBlock Text="USUARIOS" Foreground="White"/>
                     </StackPanel>
                 </TabItem.Header>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="5*"/>
+                        <ColumnDefinition Width="4*"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid Margin="20,20,15,20" Background="#222">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="20"/>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                            <ColumnDefinition Width="20"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="1.5*"/>
+                            <RowDefinition Height=".5*"/>
+                            <RowDefinition Height="7*"/>
+                            <RowDefinition Height="15"/>
+                        </Grid.RowDefinitions>
+
+                        <Button x:Name="NuevoUsuarioBtn" Grid.Row="1" Grid.Column="1" Margin="10,20,10,20" Content="NUEVO" Click="NuevoUsuarioBtn_Click"/>
+                        <Button x:Name="ModificarUsuarioBtn" Grid.Row="1" Grid.Column="2" Margin="10,20,10,20" Content="MODIFICAR"/>
+                        <Button x:Name="EliminarUsuarioBtn" Grid.Row="1" Grid.Column="3" Margin="10,20,10,20" Content="ELIMINAR"/>
+                        <Button x:Name="CancelarUsuarioBtn" Grid.Row="1" Grid.Column="1" Margin="10,20,10,20" Content="CANCELAR" Click="CancelarUsuarioBtn_Click"/>
+                        <Button x:Name="GuardarUsuarioBtn" Grid.Row="1" Grid.Column="2" Margin="10,20,10,20" Content="GUARDAR" Click="GuardarUsuarioBtn_Click"/>
+
+                        <DataGrid x:Name="UsuariosDG" Grid.ColumnSpan="5" Grid.Column="1" Grid.Row="3" Foreground="White" Background="#333" 
+                                  FontSize="16"  AutoGenerateColumns="False">
+                            <DataGrid.Resources>
+                                <Style BasedOn="{StaticResource {x:Type DataGridColumnHeader}}" TargetType="{x:Type DataGridColumnHeader}">
+                                    <Setter Property="Background" Value="#272727" />
+                                </Style>
+                                <Style BasedOn="{StaticResource {x:Type DataGridRowHeader}}" TargetType="{x:Type DataGridRowHeader}">
+                                    <Setter Property="Background" Value="#272727" />
+                                </Style>
+                                <Style BasedOn="{StaticResource {x:Type DataGridCell}}" TargetType="{x:Type DataGridCell}">
+                                    <Setter Property="Background" Value="#272727" />
+                                </Style>
+                            </DataGrid.Resources>
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Header="No" Binding="{Binding id}" Width="3*"/>
+                                <DataGridTextColumn Header="Nombre" Binding="{Binding Nombre}" Width="5*"/>
+                                <DataGridTextColumn Header="Nivel" Binding="{Binding Nivel}" Width="1*"/>
+                            </DataGrid.Columns>
+                        </DataGrid>
+                        
+                    </Grid>
+                </Grid>
             </TabItem>
         </TabControl>
     </Grid>
