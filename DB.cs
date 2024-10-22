@@ -144,6 +144,8 @@ namespace Almacen_Heater
         }
 
 
+
+        //Usuario
         public List<Usuario> CargarUsuarios()
         {
             List<Usuario> usuarios = new List<Usuario>();
@@ -204,5 +206,12 @@ namespace Almacen_Heater
                 con.Close();
             }
         }
+
+        //Movimientos
+        
+
+        //Registros
+        public void 
     }
+
 }
