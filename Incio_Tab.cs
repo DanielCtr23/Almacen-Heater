@@ -34,7 +34,27 @@ namespace Almacen_Heater
 
         private void BtnNuevo_Click(object sender, RoutedEventArgs e)
         {
-			
+			_registro = new Registro()
+			{
+				id = 0,
+				Fecha = DateTime.Now,
+				Usuario = new Usuario()
+				{
+					id = 10718,
+					Nombre = "Daniel Contreras"
+				},
+				Movimientos = new List<Movimiento>(),
+				Comentario = " "
+
+			};
+            TBFechaRegistro.Text = _registro.Fecha.ToString();
+            TBIdRegistro.Text = "Nuevo";
+            TBUsuario.Text = _registro.Usuario.id.ToString() + ": " + _registro.Usuario.Nombre;
+            _movientos = new ObservableCollection<Movimiento>();
+            DGMovimientos.ItemsSource = _movientos;
+
+            // Habilitar la edición del DataGrid
+            DGMovimientos.IsReadOnly = false;
         }
 
     }
