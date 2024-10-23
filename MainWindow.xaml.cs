@@ -30,13 +30,7 @@ namespace Almacen_Heater
             InitializeComponent();
 
             CargarTabUsuarios();
-
-            registroactual = DB.Registro(DB.UltimoRegistro());
-            TBFechaRegistro.Text = registroactual.Rows[0]["fecha"].ToString();
-            TBIdRegistro.Text = registroactual.Rows[0]["id"].ToString();
-            TBUsuario.Text = registroactual.Rows[0]["Nombre"].ToString();
-            DGMovimientos.ItemsSource = DB.Movimientos(DB.UltimoRegistro()).DefaultView;
-            DGMovimientos.MinColumnWidth = 120;
+            CargarTabInicio();
         }
 
         private void DGMovimientos_MouseDoubleClick(object sender, MouseButtonEventArgs e)
@@ -73,14 +67,6 @@ namespace Almacen_Heater
             ImgArticulo.Source = bmp;
         }
 
-        private void BtnNuevo_Click(object sender, RoutedEventArgs e)
-        {
-            Nuevo = true;
-            DGMovimientos.ItemsSource = null;
-            DGMovimientos.Items.Clear();
-            DGMovimientos.ItemsSource = new ObservableCollection<Movimiento>();
-            DGMovimientos.CanUserAddRows = true;
-        }
 
         private void BtnAnterior_Click(object sender, RoutedEventArgs e)
         {
@@ -97,7 +83,7 @@ namespace Almacen_Heater
                 {
                     string descripcion = DB.Articulo(CodigoIngresado).Rows[0]["Descripción"].ToString();
                     var movimiento = e.Row.Item as Movimiento;
-                    movimiento.Descripción = descripcion;
+                    //movimiento.Descripción = descripcion;
                 }
             }
         }
@@ -111,6 +97,7 @@ namespace Almacen_Heater
         {
             DGMovimientos.Items.Refresh();
         }
+
 
     }
 

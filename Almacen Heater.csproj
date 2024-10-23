@@ -93,6 +93,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Entidades.cs" />
+    <Compile Include="Incio_Tab.cs" />
     <Compile Include="Usuarios_Tab.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>

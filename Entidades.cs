@@ -49,6 +49,10 @@ namespace Almacen_Heater
         public Articulo Articulo { get; set;}
         public int Cantidad { get; set;}
         public decimal Costo { get; set;}
+        public decimal Importe
+        {
+            get { return Costo * Cantidad; }
+        }
     }
 
     public class Registro

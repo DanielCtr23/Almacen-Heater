@@ -211,7 +211,74 @@ namespace Almacen_Heater
         
 
         //Registros
-        public void 
+        public Registro CargarRegistro(int RegistroId)
+        {
+            lock(lockObject)
+            {
+                con.Open();
+                using (cmd = new MySqlCommand("ObtenerMovimientos",con))
+                {
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.AddWithValue("@Registro", RegistroId);
+                    using(MySqlDataReader reader = cmd.ExecuteReader())
+                    {
+                        Registro registro = null;
+                        List<Movimiento> movimientos = new List<Movimiento>();
+                        while (reader.Read())
+                        {
+                            if (registro == null)
+                            {
+                                registro = new Registro()
+                                {
+                                    id = reader.GetInt32("Registroid"),
+                                    Fecha = reader.GetDateTime("Fecha"),
+                                    Comentario = reader.GetString("RegistroComentario"),
+                                    Usuario = new Usuario()
+                                    {
+                                        id = reader.GetInt32("Usuarioid"),
+                                        Nombre = reader.GetString("UsuarioNombre"),
+                                        Nivel = reader.GetInt32("UsuarioNivel")
+                                    },
+                                    Movimientos = movimientos
+                                };
+                            }
+                            Movimiento movimiento = new Movimiento()
+                            {
+                                id = reader.GetInt32("Linea"),
+                                Cantidad = reader.GetInt32("Cantidad"),
+                                Costo = reader.GetDecimal("Costo"),
+                                Articulo = new Articulo
+                                {
+                                    id = reader.GetInt32("Articuloid"),
+                                    Codigo = reader.GetString("Codigo"),
+                                    Descripcion = reader.GetString("Descripcion"),
+                                    Cantidad = reader.GetInt32("Stock"),
+                                    StockObjetivo = reader.GetInt32("StockObjetivo"),
+                                    StockMinimo = reader.GetInt32("StockMinimo"),
+                                    url = reader.GetString("Url"),
+                                    Equipo = new Equipo
+                                    {
+                                        id = reader.GetInt32("Equipoid"),
+                                        Nombre = reader.GetString("EquipoNombre"),
+                                        Ubicacion = reader.GetString("EquipoUbicacion")
+                                    },
+                                    Ubicacion = new Ubicacion
+                                    {
+                                        id = reader.GetInt32("Ubicacionid"),
+                                        Rack = reader.GetInt32("Rack"),
+                                        Seccion = reader.GetString("Seccion"),
+                                        Comentario = reader.GetString("UbicacionComentario")
+                                    }
+                                }
+                            };
+                            movimientos.Add(movimiento);
+                            }
+                            return registro;
+                        }
+                    }
+                }
+            }
+        
     }
 
 }

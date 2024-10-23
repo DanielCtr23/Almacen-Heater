@@ -108,11 +108,11 @@
                                 </Style>
                             </DataGrid.Resources>
                             <DataGrid.Columns>
-                                <DataGridTextColumn Header="No" Binding="{Binding No}" Width="*"/>
-                                <DataGridTextColumn Header="Codigo" Binding="{Binding Codigo}" Width="3*"/>
-                                <DataGridTextColumn Header="Descripción" Binding="{Binding Descripción}" Width="7*"/>
+                                <DataGridTextColumn Header="   *" Binding="{Binding id}" Width="*"/>
+                                <DataGridTextColumn Header="Codigo" Binding="{Binding Articulo.Codigo}" Width="3*"/>
+                                <DataGridTextColumn Header="Descripción" Binding="{Binding Articulo.Descripcion}" Width="7*"/>
                                 <DataGridTextColumn Header="Cantidad" Binding="{Binding Cantidad}" Width="*"/>
-                                <DataGridTextColumn Header="Costo Unitario" Binding="{Binding CostoUnitario}" Width="2*"/>
+                                <DataGridTextColumn Header="Costo Unitario" Binding="{Binding Costo}" Width="2*"/>
                                 <DataGridTextColumn Header="Importe" Binding="{Binding Importe}" Width="2*"/>
                             </DataGrid.Columns>
                         </DataGrid>
