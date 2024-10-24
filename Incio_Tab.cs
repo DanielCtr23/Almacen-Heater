@@ -17,42 +17,40 @@ namespace Almacen_Heater
 
         private void CargarTabInicio()
         {
-			try
-			{
-				var RegistroActual = DB.CargarRegistro((DB.UltimoRegistro()));
-				_registro = RegistroActual;
-				var Movimientos = RegistroActual.Movimientos;
-				_movimientos = new ObservableCollection<Movimiento>(Movimientos);
-				DGMovimientos.ItemsSource = _movimientos;
-				TBFechaRegistro.Text = _registro.Fecha.ToString();
-				TBIdRegistro.Text = _registro.id.ToString();
-				TBUsuario.Text = _registro.Usuario.id.ToString()+ ": " + _registro.Usuario.Nombre;
-			}
-			catch (Exception)
-			{
-
-			}
+            try
+            {
+                var RegistroActual = DB.CargarRegistro(DB.UltimoRegistro());
+                _registro = RegistroActual;
+                var Movimientos = RegistroActual.Movimientos;
+                _movimientos = new ObservableCollection<Movimiento>(Movimientos);
+                DGMovimientos.ItemsSource = _movimientos;
+                TBFechaRegistro.Text = _registro.Fecha.ToString("g"); // Formato de fecha
+                TBIdRegistro.Text = _registro.idRegistro.ToString();
+                TBUsuario.Text = $"{_registro.Usuario.id}: {_registro.Usuario.Nombre}";
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error al cargar el registro: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
         }
 
         private void BtnNuevo_Click(object sender, RoutedEventArgs e)
         {
-            _movimientos.Clear();
-			LoginDialog loginDialog = new LoginDialog();
-			bool? result = loginDialog.ShowDialog();
-			if(result == true)
-			{
-                _registro = new Registro()
+            LoginDialog loginDialog = new LoginDialog();
+            bool? result = loginDialog.ShowDialog();
+            if (result == true)
+            {
+                _registro = new Registro
                 {
-                    id = 0,
+                    idRegistro = 0,
                     Fecha = DateTime.Now,
                     Usuario = loginDialog.UsuarioAutenticado,
                     Movimientos = new List<Movimiento>(),
                     Comentario = " "
-
                 };
-                TBFechaRegistro.Text = _registro.Fecha.ToString();
+                TBFechaRegistro.Text = _registro.Fecha.ToString("g");
                 TBIdRegistro.Text = " ";
-                TBUsuario.Text = _registro.Usuario.id.ToString() + ": " + _registro.Usuario.Nombre;
+                TBUsuario.Text = $"{_registro.Usuario.id}: {_registro.Usuario.Nombre}";
                 _movimientos = new ObservableCollection<Movimiento>();
                 DGMovimientos.ItemsSource = _movimientos;
 
@@ -69,19 +67,12 @@ namespace Almacen_Heater
                 if (int.Parse(TBIdRegistro.Text) - 1 > 0)
                 {
                     var RegistroActual = DB.CargarRegistro(int.Parse(TBIdRegistro.Text) - 1);
-                    _registro = RegistroActual;
-                    var Movimientos = RegistroActual.Movimientos;
-                    _movimientos = new ObservableCollection<Movimiento>(Movimientos);
-                    DGMovimientos.ItemsSource = _movimientos;
-                    TBFechaRegistro.Text = _registro.Fecha.ToString();
-                    TBIdRegistro.Text = _registro.id.ToString();
-                    TBUsuario.Text = _registro.Usuario.id.ToString() + ": " + _registro.Usuario.Nombre;
+                    CargarRegistro(RegistroActual);
                 }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-
-                throw;
+                MessageBox.Show($"Error al cargar el registro anterior: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
 
@@ -92,61 +83,80 @@ namespace Almacen_Heater
                 if (int.Parse(TBIdRegistro.Text) + 1 <= DB.UltimoRegistro())
                 {
                     var RegistroActual = DB.CargarRegistro(int.Parse(TBIdRegistro.Text) + 1);
-                    _registro = RegistroActual;
-                    var Movimientos = RegistroActual.Movimientos;
-                    _movimientos = new ObservableCollection<Movimiento>(Movimientos);
-                    DGMovimientos.ItemsSource = _movimientos;
-                    TBFechaRegistro.Text = _registro.Fecha.ToString();
-                    TBIdRegistro.Text = _registro.id.ToString();
-                    TBUsuario.Text = _registro.Usuario.id.ToString() + ": " + _registro.Usuario.Nombre;
+                    CargarRegistro(RegistroActual);
                 }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-
-                throw;
+                MessageBox.Show($"Error al cargar el registro siguiente: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
 
+        private void CargarRegistro(Registro registroActual)
+        {
+            _registro = registroActual;
+            var Movimientos = registroActual.Movimientos;
+            _movimientos = new ObservableCollection<Movimiento>(Movimientos);
+            DGMovimientos.ItemsSource = _movimientos;
+            TBFechaRegistro.Text = _registro.Fecha.ToString("g");
+            TBIdRegistro.Text = _registro.idRegistro.ToString();
+            TBUsuario.Text = $"{_registro.Usuario.id}: {_registro.Usuario.Nombre}";
+        }
+
+        private void DGMovimientos_AddingNewItem(object sender, AddingNewItemEventArgs e)
+        {
+            e.NewItem = new Movimiento(); // Crear un nuevo objeto Movimiento
+        }
 
         private void DGMovimientos_CellEditEnding(object sender, DataGridCellEditEndingEventArgs e)
         {
-            if (e.Column.DisplayIndex == 1)
+            try
             {
-                var tb = e.EditingElement as TextBox;
-                string CodigoIngresado = tb.Text;
-                Articulo _articuloEncontrado = DB.BusquedaArticulo(CodigoIngresado);
-                if (_articuloEncontrado != null)
-                {
-                    movimientoActual = DGMovimientos.SelectedItem as Movimiento;
-                    movimientoActual.Articulo = _articuloEncontrado;
-                    movimientoActual.Costo = _articuloEncontrado.Costo;
-
-                    
-                    //DGMovimientos.Items.Refresh();
-                }
-
-            }
-            if (e.Column.Header.ToString() == "Cantidad")
-            {
-                if (movimientoActual != null)
+                if (e.Column.DisplayIndex == 1) // Suponiendo que es la columna del código
                 {
                     var tb = e.EditingElement as TextBox;
-                    if (int.TryParse(tb.Text, out int nuevaCantidad))
-                    {
-                        movimientoActual.Cantidad = nuevaCantidad;
+                    string codigoIngresado = tb.Text;
+                    Articulo articuloEncontrado = DB.BusquedaArticulo(codigoIngresado);
 
+                    if (articuloEncontrado != null)
+                    {
+                        movimientoActual = e.Row.Item as Movimiento;
+                        if (movimientoActual == null)
+                        {
+                            movimientoActual = new Movimiento();
+                            _movimientos.Add(movimientoActual);
+                            DGMovimientos.ItemsSource = _movimientos;
+                        }
+
+                        // Asignar los valores del artículo encontrado
+                        movimientoActual.Articulo = articuloEncontrado;
+                        movimientoActual.Costo = articuloEncontrado.Costo;
+                        movimientoActual.Cantidad = 1; // Asignar valor predeterminado
+                    }
+                    else
+                    {
+                        MessageBox.Show("Artículo no encontrado. Verifique el código ingresado.", "Error", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    }
+                }
+                else if (e.Column.Header.ToString() == "Cantidad")
+                {
+                    if (movimientoActual != null)
+                    {
+                        var tb = e.EditingElement as TextBox;
+                        if (int.TryParse(tb.Text, out int nuevaCantidad))
+                        {
+                            movimientoActual.Cantidad = nuevaCantidad;
+                        }
+                        else
+                        {
+                            MessageBox.Show("La cantidad debe ser un número válido.", "Error", MessageBoxButton.OK, MessageBoxImage.Warning);
+                        }
                     }
                 }
             }
-        }
-        private void DGMovimientos_RowEditEnding(object sender, DataGridRowEditEndingEventArgs e)
-        {
-            if (movimientoActual != null)
+            catch (Exception ex)
             {
-                _movimientos.Add(movimientoActual);
-                movimientoActual = null;
-                DGMovimientos.ItemsSource = _movimientos;
+                MessageBox.Show($"Ocurrió un error: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
 

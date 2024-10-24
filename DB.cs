@@ -266,7 +266,7 @@ namespace Almacen_Heater
                             {
                                 registro = new Registro()
                                 {
-                                    id = reader.GetInt32("Registroid"),
+                                    idRegistro = reader.GetInt32("Registroid"),
                                     Fecha = reader.GetDateTime("Fecha"),
                                     Comentario = reader.GetString("RegistroComentario"),
                                     Usuario = new Usuario()
@@ -280,7 +280,7 @@ namespace Almacen_Heater
                             }
                             Movimiento movimiento = new Movimiento()
                             {
-                                id = reader.GetInt32("Linea"),
+                                Movimientoid = reader.GetInt32("Linea"),
                                 Cantidad = reader.GetInt32("Cantidad"),
                                 Costo = reader.GetDecimal("Costo"),
                                 Articulo = new Articulo

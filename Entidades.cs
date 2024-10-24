@@ -51,7 +51,7 @@ namespace Almacen_Heater
         private int _cantidad;
         private decimal _costo;
         private decimal _importe;
-        public int id { get; set;}
+        public int Movimientoid { get; set;}
         public Articulo Articulo { get; set;}
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -107,7 +107,7 @@ namespace Almacen_Heater
 
     public class Registro
     {
-        public int id { get; set;}
+        public int idRegistro { get; set;}
         public DateTime Fecha { get; set;}
         public Usuario Usuario { get; set;}
         public string Comentario { get; set;}

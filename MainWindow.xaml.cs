@@ -51,10 +51,6 @@ namespace Almacen_Heater
             ImgArticulo.Source = bmp;
         }
 
-        private void DGMovimientos_AddingNewItem(object sender, AddingNewItemEventArgs e)
-        {
-
-        }
 
     }
 

@@ -22,9 +22,9 @@
                 <RowDefinition/>
             </Grid.RowDefinitions>
             <Viewbox Grid.Column="1" Grid.RowSpan="2" Margin="20">
-                <TextBlock Text="ALMACEN HEATER" Foreground="White"/>
+                <TextBlock Text="ALMACEN CEBSA" Foreground="White"/>
             </Viewbox>
-            <Image Source="/Logo.png" Grid.RowSpan="2" Margin="30" HorizontalAlignment="Left"/>
+            <Image Source="/d5793d67a6558aa5d64069a013b4a63d.webp" Grid.RowSpan="2" Margin="30" HorizontalAlignment="Left" />
         </Grid>
         <TabControl TabStripPlacement="Left" Background="#333" BorderBrush="#444" Grid.ColumnSpan="2" Margin="0,177,0,0" Grid.RowSpan="2" >
             <TabControl.Resources>
@@ -95,7 +95,7 @@
 
                         <DataGrid x:Name="DGMovimientos" Grid.ColumnSpan="7" Grid.Column="1" Grid.Row="3" Foreground="White" Background="#333" 
                                   FontSize="16" MouseDoubleClick="DGMovimientos_MouseDoubleClick" SelectedCellsChanged="DGMovimientos_SelectedCellsChanged"
-                                  AutoGenerateColumns="False" CellEditEnding="DGMovimientos_CellEditEnding" RowEditEnding="DGMovimientos_RowEditEnding" AddingNewItem="DGMovimientos_AddingNewItem">
+                                  AutoGenerateColumns="False" CellEditEnding="DGMovimientos_CellEditEnding" AddingNewItem="DGMovimientos_AddingNewItem">
                             <DataGrid.Resources>
                                 <Style BasedOn="{StaticResource {x:Type DataGridColumnHeader}}" TargetType="{x:Type DataGridColumnHeader}">
                                     <Setter Property="Background" Value="#272727" />
@@ -108,12 +108,12 @@
                                 </Style>
                             </DataGrid.Resources>
                             <DataGrid.Columns>
-                                <DataGridTextColumn Header="   *" Binding="{Binding Path =  id, Mode=TwoWay}"  Width="*"/>
-                                <DataGridTextColumn Header="Codigo" Binding="{Binding Path = Articulo.Codigo}" Width="3*"/>
+                                <DataGridTextColumn Header="   *" Binding="{Binding Path = Movimientoid, Mode=TwoWay}" Width="*"/>
+                                <DataGridTextColumn Header="Código" Binding="{Binding Path = Articulo.Codigo, Mode=TwoWay}" Width="3*"/>
                                 <DataGridTextColumn Header="Descripción" Binding="{Binding Path = Articulo.Descripcion, Mode=TwoWay}" Width="7*"/>
                                 <DataGridTextColumn Header="Cantidad" Binding="{Binding Path = Cantidad, Mode=TwoWay}" Width="*"/>
-                                <DataGridTextColumn Header="Costo Unitario" Binding="{Binding Path = Costo, Mode=TwoWay}"  Width="2*"/>
-                                <DataGridTextColumn Header="Importe" Binding="{Binding Path = Importe, Mode=OneWay}" IsReadOnly="True"  Width="2*"/>
+                                <DataGridTextColumn Header="Costo Unitario" Binding="{Binding Path = Costo, Mode=TwoWay}" Width="2*"/>
+                                <DataGridTextColumn Header="Importe" Binding="{Binding Path = Importe, Mode=OneWay}" IsReadOnly="True" Width="2*"/>
                             </DataGrid.Columns>
                         </DataGrid>
                     </Grid>
