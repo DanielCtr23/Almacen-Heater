@@ -14,7 +14,7 @@ namespace Almacen_Heater
 		private Registro _registro;
 		private ObservableCollection<Movimiento> _movimientos;
         Movimiento movimientoActual;
-        int ConteoLinea = 0;
+        int ConteoLinea = 1;
 
         private void CargarTabInicio()
         {
@@ -49,7 +49,6 @@ namespace Almacen_Heater
                     Usuario = loginDialog.UsuarioAutenticado,
                     Movimientos = new List<Movimiento>(),
                     Comentario = " "
-
                 };
                 TBFechaRegistro.Text = _registro.Fecha.ToString();
                 TBIdRegistro.Text = " ";
@@ -60,6 +59,34 @@ namespace Almacen_Heater
                 // Habilitar la edición del DataGrid
                 DGMovimientos.IsReadOnly = false;
                 DGMovimientos.CanUserAddRows = true;
+            }
+        }
+
+        private void DGMovimientos_AddingNewItem(object sender, AddingNewItemEventArgs e)
+        {
+            var UltimoItem = DGMovimientos.Items.OfType<Movimiento>().LastOrDefault();
+            int LastId = UltimoItem?.id ?? 0;
+            var newItem = new Movimiento
+            {
+                id = LastId + 1
+            };
+            e.NewItem = newItem;
+        }
+        private void DGMovimientos_CellEditEnding(object sender, DataGridCellEditEndingEventArgs e)
+        {
+            if(e.Column.DisplayIndex == 1)
+            {
+                string CodigoIngresado = (e.EditingElement as TextBox).Text;
+                Articulo _articuloEncontrado = DB.BusquedaArticulo(CodigoIngresado);
+                if (_articuloEncontrado != null)
+                {
+                    movimientoActual = e.Row.Item as Movimiento;
+                    movimientoActual.Articulo = new Articulo();
+                    movimientoActual.Articulo = _articuloEncontrado;
+                    movimientoActual.Costo = movimientoActual.Articulo.Costo;
+                    e.Row.Item = movimientoActual;
+                    
+                }
             }
         }
 
@@ -108,6 +135,7 @@ namespace Almacen_Heater
                 throw;
             }
         }
+
 
 
 

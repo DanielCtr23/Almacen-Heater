@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace Almacen_Heater
 {
+    
     public class Usuario
     {
         public int id { get; set; }
@@ -45,15 +47,79 @@ namespace Almacen_Heater
         public string Comentario { get; set;}
     }
 
-    public class Movimiento
+    public class Movimiento : INotifyPropertyChanged
     {
+        DB db = new DB();
+        public event PropertyChangedEventHandler PropertyChanged;
+        private int _cantidad;
+        private decimal _costo;
+        private decimal _importe;
+        private string _codigo;
         public int id { get; set;}
+        public string CodigoArticulo 
+        {
+            get
+            {
+                return _codigo;
+            }
+            set
+            {
+                if (_codigo != value)
+                {
+                    _codigo = value;
+                    OnPropertyChanged(nameof(CodigoArticulo));
+                    Articulo = db.BusquedaArticulo(_codigo);
+                }
+                
+            }
+        }
         public Articulo Articulo { get; set;}
-        public int Cantidad { get; set;}
-        public decimal Costo { get; set;}
+        public int Cantidad
+        {
+            get { return _cantidad; }
+            set
+            {
+                if (_cantidad != value)
+                {
+                    _cantidad = value;
+                    OnPropertyChanged(nameof(Cantidad));
+                    CalcularImporte();
+                }
+            }
+        }
+        public decimal Costo
+        {
+            get { return _costo; }
+            set
+            {
+                if (_costo != value)
+                {
+                    _costo = value;
+                    OnPropertyChanged(nameof(Costo));
+                    CalcularImporte();
+                }
+            }
+        }
         public decimal Importe
         {
-            get { return Costo * Cantidad; }
+            get { return _importe; }
+            private set
+            {
+                if (_importe != value)
+                {
+                    _importe = value;
+                    OnPropertyChanged(nameof(Importe));
+                }
+            }
+        }
+
+        private void CalcularImporte()
+        {
+            Importe = Cantidad * Costo;
+        }
+        protected void OnPropertyChanged(string propertyName)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }
 
