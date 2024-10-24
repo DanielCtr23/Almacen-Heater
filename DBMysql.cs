@@ -28,8 +28,5 @@ namespace Almacen_Heater
             con = new MySqlConnection(connectionString);
         }
 
-
-
-
     }
 }

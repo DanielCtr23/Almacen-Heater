@@ -28,7 +28,6 @@ namespace Almacen_Heater
         public MainWindow()
         {
             InitializeComponent();
-
             CargarTabUsuarios();
             CargarTabInicio();
         }
@@ -40,22 +39,7 @@ namespace Almacen_Heater
 
         private void DGMovimientos_SelectedCellsChanged(object sender, SelectedCellsChangedEventArgs e)
         {
-            if (!Nuevo)
-            {
-                DataRowView valor = DGMovimientos.SelectedItem as DataRowView;
-                if (e.AddedCells.Count > 0)
-                {
-                    try
-                    {
-                        DataTable Articulo = DB.Articulo(valor.DataView.Table.Rows[0]["Codigo"].ToString());
-                        CargarImagen(Articulo.Rows[0]["Url"].ToString());
-                    }
-                    catch (Exception)
-                    {
-
-                    }
-                }
-            }
+            
         }
 
         private void CargarImagen(string ruta)
@@ -67,37 +51,10 @@ namespace Almacen_Heater
             ImgArticulo.Source = bmp;
         }
 
-
-        private void BtnAnterior_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
-
-        private void DGMovimientos_CellEditEnding(object sender, DataGridCellEditEndingEventArgs e)
-        {
-            if(e.Column.Header.ToString() == "Codigo")
-            {
-                TextBox TB = e.EditingElement as TextBox;
-                string CodigoIngresado = TB.Text;
-                if (!string.IsNullOrEmpty(CodigoIngresado))
-                {
-                    string descripcion = DB.Articulo(CodigoIngresado).Rows[0]["Descripción"].ToString();
-                    var movimiento = e.Row.Item as Movimiento;
-                    //movimiento.Descripción = descripcion;
-                }
-            }
-        }
-
-        private void DGMovimientos_RowEditEnding(object sender, DataGridRowEditEndingEventArgs e)
-        {
-            
-        }
-
         private void DGMovimientos_AddingNewItem(object sender, AddingNewItemEventArgs e)
         {
-            DGMovimientos.Items.Refresh();
-        }
 
+        }
 
     }
 

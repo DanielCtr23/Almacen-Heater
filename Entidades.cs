@@ -20,6 +20,8 @@ namespace Almacen_Heater
         public string Descripcion { get; set;}
         //public int Equipo { get; set;}
         public int Cantidad { get; set;}
+
+        public decimal Costo;
         public int StockObjetivo { get; set;}
         public int StockMinimo { get; set;}
         //public int Ubicacion { get; set;}

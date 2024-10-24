@@ -207,6 +207,42 @@ namespace Almacen_Heater
             }
         }
 
+        public Usuario CargarUsuario(int id)
+        {
+            Usuario _usuario = null;
+            lock (lockObject)
+            {
+                con.Open();
+                using (cmd = new MySqlCommand("ObtenerUsuario",con))
+                {
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.AddWithValue("@id", id);
+                    try
+                    {
+                        using (MySqlDataReader reader = cmd.ExecuteReader())
+                        {
+                            while (reader.Read())
+                            {
+                                _usuario = new Usuario()
+                                {
+                                    id = reader.GetInt32("id"),
+                                    Nombre = reader.GetString("Nombre"),
+                                    Nivel = reader.GetInt32("Nivel")
+                                };
+                            }
+                            con.Close() ;
+                            return _usuario;
+                        }
+                    }
+                    catch (Exception)
+                    {
+
+                        throw;
+                    }
+                }
+            }
+        }
+
         //Movimientos
         
 
@@ -253,6 +289,7 @@ namespace Almacen_Heater
                                     Codigo = reader.GetString("Codigo"),
                                     Descripcion = reader.GetString("Descripcion"),
                                     Cantidad = reader.GetInt32("Stock"),
+                                    Costo = reader.GetDecimal("Costo"),
                                     StockObjetivo = reader.GetInt32("StockObjetivo"),
                                     StockMinimo = reader.GetInt32("StockMinimo"),
                                     url = reader.GetString("Url"),
@@ -272,12 +309,71 @@ namespace Almacen_Heater
                                 }
                             };
                             movimientos.Add(movimiento);
-                            }
-                            return registro;
                         }
+                        con.Close();
+                        return registro;
                     }
                 }
             }
+        }
+
+        //Articulos
+        public Articulo BusquedaArticulo(string busqueda)
+        {
+            Articulo _articulo = null;
+            lock (lockObject)
+            {
+                con.Open();
+                using (cmd = new MySqlCommand("BuscarArticulo",con))
+                {
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.AddWithValue("@Busqueda", busqueda);
+                    try
+                    {
+                        using (MySqlDataReader reader = cmd.ExecuteReader())
+                        {
+                            if (_articulo == null)
+                            {
+                                while (reader.Read())
+                                {
+                                    _articulo = new Articulo
+                                    {
+                                        id = reader.GetInt32("id"),
+                                        Codigo = reader.GetString("Codigo"),
+                                        Descripcion = reader.GetString("Descripción"),
+                                        Cantidad = reader.GetInt32("Cantidad"),
+                                        Costo = reader.GetDecimal("Costo"),
+                                        StockObjetivo = reader.GetInt32("Stock_Objetivo"),
+                                        StockMinimo = reader.GetInt32("Stock_Minimo"),
+                                        url = reader.GetString("url"),
+                                        Equipo = new Equipo
+                                        {
+                                            id = reader.GetInt32("equipoid"),
+                                            Nombre = reader.GetString("Nombre"),
+                                            Ubicacion = reader.GetString("equipoUbicacion")
+                                        },
+                                        Ubicacion = new Ubicacion
+                                        {
+                                            id = reader.GetInt32("ubicacionid"),
+                                            Rack = reader.GetInt32("Rack"),
+                                            Seccion = reader.GetString("Seccion"),
+                                            Comentario = reader.GetString("Comentario")
+                                        }
+                                    };
+                                }
+                            }
+                            con.Close();
+                            return _articulo;
+                        }
+                    }
+                    catch (Exception)
+                    {
+
+                        throw;
+                    }
+                }
+            }
+        }
         
     }
 
