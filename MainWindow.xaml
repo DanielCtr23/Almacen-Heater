@@ -108,12 +108,12 @@
                                 </Style>
                             </DataGrid.Resources>
                             <DataGrid.Columns>
-                                <DataGridTextColumn Header="   *" Binding="{Binding Path =  id}"  Width="*"/>
+                                <DataGridTextColumn Header="   *" Binding="{Binding Path =  id, Mode=TwoWay}"  Width="*"/>
                                 <DataGridTextColumn Header="Codigo" Binding="{Binding Path = Articulo.Codigo}" Width="3*"/>
                                 <DataGridTextColumn Header="Descripción" Binding="{Binding Path = Articulo.Descripcion, Mode=TwoWay}" Width="7*"/>
                                 <DataGridTextColumn Header="Cantidad" Binding="{Binding Path = Cantidad, Mode=TwoWay}" Width="*"/>
                                 <DataGridTextColumn Header="Costo Unitario" Binding="{Binding Path = Costo, Mode=TwoWay}"  Width="2*"/>
-                                <DataGridTextColumn Header="Importe" Binding="{Binding Path = Importe, Mode=OneWay}"   Width="2*"/>
+                                <DataGridTextColumn Header="Importe" Binding="{Binding Path = Importe, Mode=OneWay}" IsReadOnly="True"  Width="2*"/>
                             </DataGrid.Columns>
                         </DataGrid>
                     </Grid>

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -45,15 +46,62 @@ namespace Almacen_Heater
         public string Comentario { get; set;}
     }
 
-    public class Movimiento
+    public class Movimiento : INotifyPropertyChanged
     {
+        private int _cantidad;
+        private decimal _costo;
+        private decimal _importe;
         public int id { get; set;}
         public Articulo Articulo { get; set;}
-        public int Cantidad { get; set;}
-        public decimal Costo { get; set;}
+
+        public event PropertyChangedEventHandler PropertyChanged;
+        public int Cantidad 
+        {
+            get { return _cantidad; }
+            set
+            {
+                if (_cantidad != value)
+                {
+                    _cantidad = value;
+                    OnPropertyChanged(nameof(Cantidad));
+                    CalcularImporte();
+                }
+            }
+        }
+        public decimal Costo 
+        {
+            get { return _costo; }
+            set
+            {
+                if (_costo != value)
+                {
+                    _costo = value;
+                    OnPropertyChanged(nameof(Costo));
+                    CalcularImporte();
+                }
+            }
+        }
         public decimal Importe
         {
-            get { return Costo * Cantidad; }
+            get { return _importe; }
+            private set
+            {
+                if (_importe != value)
+                {
+                    _importe = value;
+                    OnPropertyChanged(nameof(Importe));
+                }
+            }
+        }
+
+        private void CalcularImporte()
+        {
+            Importe = Cantidad * Costo;
+        }
+
+        protected void OnPropertyChanged(string propertyName)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }
 

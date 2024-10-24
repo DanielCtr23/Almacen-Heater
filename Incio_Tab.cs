@@ -121,6 +121,7 @@ namespace Almacen_Heater
                     movimientoActual = DGMovimientos.SelectedItem as Movimiento;
                     movimientoActual.Articulo = _articuloEncontrado;
                     movimientoActual.Costo = _articuloEncontrado.Costo;
+
                     
                     //DGMovimientos.Items.Refresh();
                 }
@@ -130,16 +131,23 @@ namespace Almacen_Heater
             {
                 if (movimientoActual != null)
                 {
-                    //DGMovimientos.Items.Refresh();
+                    var tb = e.EditingElement as TextBox;
+                    if (int.TryParse(tb.Text, out int nuevaCantidad))
+                    {
+                        movimientoActual.Cantidad = nuevaCantidad;
 
+                    }
                 }
             }
         }
         private void DGMovimientos_RowEditEnding(object sender, DataGridRowEditEndingEventArgs e)
         {
-            _movimientos.Add(movimientoActual);
-            movimientoActual = null;
-            DGMovimientos.ItemsSource = _movimientos;
+            if (movimientoActual != null)
+            {
+                _movimientos.Add(movimientoActual);
+                movimientoActual = null;
+                DGMovimientos.ItemsSource = _movimientos;
+            }
         }
 
     }
