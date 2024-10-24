@@ -14,6 +14,7 @@ namespace Almacen_Heater
 		private Registro _registro;
 		private ObservableCollection<Movimiento> _movimientos;
         Movimiento movimientoActual;
+        int ConteoLinea = 0;
 
         private void CargarTabInicio()
         {
@@ -109,38 +110,6 @@ namespace Almacen_Heater
         }
 
 
-        private void DGMovimientos_CellEditEnding(object sender, DataGridCellEditEndingEventArgs e)
-        {
-            if (e.Column.DisplayIndex == 1)
-            {
-                var tb = e.EditingElement as TextBox;
-                string CodigoIngresado = tb.Text;
-                Articulo _articuloEncontrado = DB.BusquedaArticulo(CodigoIngresado);
-                if (_articuloEncontrado != null)
-                {
-                    movimientoActual = DGMovimientos.SelectedItem as Movimiento;
-                    movimientoActual.Articulo = _articuloEncontrado;
-                    movimientoActual.Costo = _articuloEncontrado.Costo;
-                    
-                    //DGMovimientos.Items.Refresh();
-                }
-
-            }
-            if (e.Column.Header.ToString() == "Cantidad")
-            {
-                if (movimientoActual != null)
-                {
-                    //DGMovimientos.Items.Refresh();
-
-                }
-            }
-        }
-        private void DGMovimientos_RowEditEnding(object sender, DataGridRowEditEndingEventArgs e)
-        {
-            _movimientos.Add(movimientoActual);
-            movimientoActual = null;
-            DGMovimientos.ItemsSource = _movimientos;
-        }
 
     }
 }

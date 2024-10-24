@@ -94,8 +94,7 @@
                         <Button x:Name="BtnSiguiente" Content="SIGUIENTE" FontSize="20" Foreground="White" Background="#333" Margin="10" Grid.Column="5" Grid.Row="1" Click="BtnSiguiente_Click" />
 
                         <DataGrid x:Name="DGMovimientos" Grid.ColumnSpan="7" Grid.Column="1" Grid.Row="3" Foreground="White" Background="#333" 
-                                  FontSize="16" MouseDoubleClick="DGMovimientos_MouseDoubleClick" SelectedCellsChanged="DGMovimientos_SelectedCellsChanged"
-                                  AutoGenerateColumns="False" CellEditEnding="DGMovimientos_CellEditEnding" RowEditEnding="DGMovimientos_RowEditEnding" AddingNewItem="DGMovimientos_AddingNewItem">
+                                  FontSize="16" AutoGenerateColumns="False" >
                             <DataGrid.Resources>
                                 <Style BasedOn="{StaticResource {x:Type DataGridColumnHeader}}" TargetType="{x:Type DataGridColumnHeader}">
                                     <Setter Property="Background" Value="#272727" />

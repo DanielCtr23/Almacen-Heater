@@ -32,15 +32,6 @@ namespace Almacen_Heater
             CargarTabInicio();
         }
 
-        private void DGMovimientos_MouseDoubleClick(object sender, MouseButtonEventArgs e)
-        {
-            
-        }
-
-        private void DGMovimientos_SelectedCellsChanged(object sender, SelectedCellsChangedEventArgs e)
-        {
-            
-        }
 
         private void CargarImagen(string ruta)
         {
@@ -49,11 +40,6 @@ namespace Almacen_Heater
             bmp.UriSource = new Uri(ruta, UriKind.Absolute);
             bmp.EndInit();
             ImgArticulo.Source = bmp;
-        }
-
-        private void DGMovimientos_AddingNewItem(object sender, AddingNewItemEventArgs e)
-        {
-
         }
 
     }
