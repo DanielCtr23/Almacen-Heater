@@ -28,6 +28,7 @@ namespace Almacen_Heater
 				TBFechaRegistro.Text = _registro.Fecha.ToString();
 				TBIdRegistro.Text = _registro.id.ToString();
 				TBUsuario.Text = _registro.Usuario.id.ToString()+ ": " + _registro.Usuario.Nombre;
+                ModoVisualizacion();
 			}
 			catch (Exception)
 			{
@@ -37,6 +38,7 @@ namespace Almacen_Heater
 
         private void BtnNuevo_Click(object sender, RoutedEventArgs e)
         {
+            ModoEdicion();
             _movimientos.Clear();
 			LoginDialog loginDialog = new LoginDialog();
 			bool? result = loginDialog.ShowDialog();
@@ -84,8 +86,8 @@ namespace Almacen_Heater
                     movimientoActual.Articulo = new Articulo();
                     movimientoActual.Articulo = _articuloEncontrado;
                     movimientoActual.Costo = movimientoActual.Articulo.Costo;
+                    movimientoActual.CodigoArticulo = movimientoActual.Articulo.Codigo;
                     e.Row.Item = movimientoActual;
-                    
                 }
             }
         }
@@ -135,9 +137,33 @@ namespace Almacen_Heater
                 throw;
             }
         }
+        private void BtnGuardar_Click(object sender, RoutedEventArgs e)
+        {
 
+        }
 
+        private void BtnCancelar_Click(object sender, RoutedEventArgs e)
+        {
 
+        }
 
+        private void ModoVisualizacion()
+        {
+            BtnAnterior.Visibility = Visibility.Visible;
+            BtnSiguiente.Visibility = Visibility.Visible;
+            BtnNuevo.Visibility = Visibility.Visible;
+            BtnModificar.Visibility = Visibility.Visible;
+            BtnGuardar.Visibility = Visibility.Hidden;
+            BtnCancelar.Visibility = Visibility.Hidden;
+        }
+        private void ModoEdicion()
+        {
+            BtnAnterior.Visibility = Visibility.Hidden;
+            BtnSiguiente.Visibility = Visibility.Hidden;
+            BtnNuevo.Visibility = Visibility.Hidden;
+            BtnModificar.Visibility = Visibility.Hidden;
+            BtnGuardar.Visibility = Visibility.Visible;
+            BtnCancelar.Visibility = Visibility.Visible;
+        }
     }
 }

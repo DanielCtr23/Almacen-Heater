@@ -283,6 +283,7 @@ namespace Almacen_Heater
                                 id = reader.GetInt32("Linea"),
                                 Cantidad = reader.GetInt32("Cantidad"),
                                 Costo = reader.GetDecimal("Costo"),
+                                CodigoArticulo = reader.GetString("Codigo"),
                                 Articulo = new Articulo
                                 {
                                     id = reader.GetInt32("Articuloid"),
@@ -299,6 +300,7 @@ namespace Almacen_Heater
                                         Nombre = reader.GetString("EquipoNombre"),
                                         Ubicacion = reader.GetString("EquipoUbicacion")
                                     },
+
                                     Ubicacion = new Ubicacion
                                     {
                                         id = reader.GetInt32("Ubicacionid"),

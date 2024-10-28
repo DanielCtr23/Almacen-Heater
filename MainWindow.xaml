@@ -92,6 +92,8 @@
                         <Button x:Name="BtnModificar" Content="MODIFICAR" FontSize="20" Foreground="White" Background="#333" Margin="10" Grid.Column="3" Grid.Row="1" />
                         <Button x:Name="BtnAnterior" Content="ANTERIOR" FontSize="20" Foreground="White" Background="#333" Margin="10" Grid.Column="4" Grid.Row="1" Click="BtnAnterior_Click" />
                         <Button x:Name="BtnSiguiente" Content="SIGUIENTE" FontSize="20" Foreground="White" Background="#333" Margin="10" Grid.Column="5" Grid.Row="1" Click="BtnSiguiente_Click" />
+                        <Button x:Name="BtnGuardar" Content="GUARDAR" FontSize="20" Foreground="White" Background="#333" Margin="10" Grid.Column="2" Grid.Row="1" Click="BtnGuardar_Click" />
+                        <Button x:Name="BtnCancelar" Content="CANCELAR" FontSize="20" Foreground="White" Background="#333" Margin="10" Grid.Column="3" Grid.Row="1" Click="BtnCancelar_Click" />
 
                         <DataGrid x:Name="DGMovimientos" Grid.ColumnSpan="8" Grid.Column="1" Grid.Row="2" Foreground="White" Background="#333" 
                                   FontSize="16" AutoGenerateColumns="False" AddingNewItem="DGMovimientos_AddingNewItem" CanUserAddRows="False" Margin="10,84,46,84" Grid.RowSpan="3" CellEditEnding="DGMovimientos_CellEditEnding" >
@@ -107,11 +109,11 @@
                                 </Style>
                             </DataGrid.Resources>
                             <DataGrid.Columns>
-                                <DataGridTextColumn Header="   *" Binding="{Binding Path =  id}"  Width="*"/>
+                                <DataGridTextColumn Header="   *" Binding="{Binding Path =  id, Mode=OneWay}"  Width="*"/>
                                 <DataGridTextColumn Header="Codigo" Binding="{Binding Path = CodigoArticulo, Mode=TwoWay}" Width="3*"/>
-                                <DataGridTextColumn Header="Descripción" Binding="{Binding Path = Articulo.Descripcion, Mode=TwoWay}" Width="7*"/>
+                                <DataGridTextColumn x:Name="DescripcionDGC" Header="Descripción" Binding="{Binding Path = Articulo.Descripcion, Mode=TwoWay}" Width="7*"/>
                                 <DataGridTextColumn Header="Cantidad" Binding="{Binding Path = Cantidad, Mode=TwoWay}" Width="*"/>
-                                <DataGridTextColumn Header="Costo Unitario" Binding="{Binding Path = Costo, Mode=TwoWay}"  Width="2*"/>
+                                 <DataGridTextColumn Header="Costo Unitario" Binding="{Binding Path = Costo, Mode=TwoWay}"  Width="2*"/>
                                 <DataGridTextColumn Header="Importe" Binding="{Binding Path = Importe, Mode=OneWay}"   Width="2*"/>
                             </DataGrid.Columns>
                         </DataGrid>
